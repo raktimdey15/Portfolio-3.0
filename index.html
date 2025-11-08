@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raktim Dey | Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/dist/lenis.min.js"></script>
+    <style>
+      /* --- 1. Global Styles & Variables (Dark Theme) --- */
+      :root {
+        --primary-color: #22d3ee; /* Vibrant Cyan/Teal */
+        --heading-color: #e5e7eb; /* Light Gray for Headings */
+        --text-color: #9ca3b0; /* Softer Gray for Body Text */
+        --bg-color: #111827; /* Very Dark Blue/Gray */
+        --bg-secondary-color: #1f2937; /* Dark Slate */
+        --border-color: rgba(255, 255, 255, 0.1);
+        --header-height: 70px;
+        --card-bg: #1f2937;
+        --shadow-color: rgba(0, 0, 0, 0.5);
+        --glow-color: var(--primary-color);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* html {
+        scroll-behavior: smooth;
+      } */ /*If needed 1*/
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.7;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        padding-top: var(--header-height);
+        /* Hide default cursor */
+        cursor: none;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-bottom: 1rem;
+        color: var(--heading-color);
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      section {
+        padding: 4rem 1rem;
+        overflow: hidden; /* Contains animations */
+      }
+
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+        cursor: none; /* Use custom cursor */
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* --- NEW: Interactive Cursor --- */
+      .cursor {
+        position: fixed;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 50%;
+        transition: transform 0.2s ease, opacity 0.3s ease;
+      }
+      #cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--primary-color);
+      }
+      #cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--primary-color);
+        opacity: 0.5;
+        transition: transform 0.2s ease, opacity 0.3s ease,
+          background-color 0.2s;
+      }
+      .cursor-interactive {
+        transform: scale(1.5);
+        background-color: rgba(34, 211, 238, 0.3);
+        opacity: 1;
+      }
+
+      /* --- Header & Glassmorphism Navigation --- */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: rgba(
+          31,
+          41,
+          55,
+          0.6
+        ); /* Semi-transparent background */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        height: var(--header-height);
+      }
+
+      .logo a {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--heading-color);
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      /* --- Hamburger Menu --- */
+      .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 28px;
+        height: 22px;
+        cursor: pointer;
+        z-index: 1002;
+      }
+
+      .hamburger-menu .bar {
+        width: 100%;
+        height: 3px;
+        background-color: var(--heading-color);
+        border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .hamburger-menu.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .hamburger-menu.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger-menu.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      /* --- Mobile Navigation Menu (Overlay) --- */
+      .mobile-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: rgba(17, 24, 39, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        z-index: 999;
+      }
+
+      .mobile-nav.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+        text-align: center;
+      }
+      .mobile-nav-links li {
+        margin: 2.5rem 0;
+      }
+      .mobile-nav-links a {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: var(--heading-color);
+        transition: color 0.3s ease;
+      }
+      .mobile-nav-links a:hover {
+        color: var(--primary-color);
+      }
+
+      /* --- CTA Buttons --- */
+      .cta-button {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: #111827;
+        padding: 0.8rem 2rem;
+        border-radius: 50px; /* Pill shape */
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2);
+      }
+
+      /* --- NEW: On-Scroll Fade-Up Animation --- */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Staggered animation delays */
+      .fade-up:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .fade-up:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      .fade-up:nthchild(4) {
+        transition-delay: 0.3s;
+      }
+
+      /* --- Hero Section --- */
+      /* --- Hero Section --- */
+      .hero {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: calc(90vh - var(--header-height));
+        padding: 0 1rem;
+        position: relative;
+        overflow: hidden;
+
+        /* --- NEW: COVER PHOTO BACKGROUND --- */
+        /* This creates a dark overlay so the white text is readable */
+        background-image: linear-gradient(
+            rgba(17, 24, 39, 0.7),
+            /* Dark overlay matching the theme */ rgba(17, 24, 39, 0.7)
+          ),
+          url("cover-photo.jpg"); /* YOUR IMAGE FILE */
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* This creates a cool parallax-like effect on scroll */
+        background-attachment: fixed;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+        color: var(--heading-color);
+        font-weight: 700;
+        animation: fadeIn 1s ease-out 0.2s forwards;
+        opacity: 0;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        color: var(--text-color);
+        min-height: 2.2rem; /* Reserve space for typing text */
+        animation: fadeIn 1s ease-out 0.4s forwards;
+        opacity: 0;
+      }
+      /* NEW: Typing cursor for subtitle */
+      .typing-cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1.2rem;
+        background-color: var(--primary-color);
+        animation: blink 0.7s infinite;
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero-content .cta-button {
+        animation: fadeIn 1s ease-out 0.6s forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* --- About Section --- */
+      #about {
+        background-color: var(--bg-secondary-color);
+      }
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .about-content img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 1.5rem auto;
+        border: 4px solid var(--primary-color);
+        box-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
+      }
+      .about-content p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      /* --- Experience & Education Section --- */
+      .experience-column h3 {
+        font-size: 1.8rem;
+        color: var(--heading-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 2rem;
+      }
+      .experience-item {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 3px solid var(--primary-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .experience-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px var(--shadow-color);
+      }
+      .experience-item h4 {
+        font-size: 1.2rem;
+        color: var(--heading-color);
+        margin-bottom: 0.25rem;
+      }
+      .experience-item h5 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+      .experience-item p {
+        color: var(--text-color);
+      }
+      .experience-item ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 1rem;
+      }
+      .experience-item li {
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+      .experience-item li::before {
+        content: "▹";
+        position: absolute;
+        left: 0;
+        top: -1px;
+        color: var(--primary-color);
+        font-weight: bold;
+        font-size: 1.4rem;
+      }
+      .experience-item li span {
+        display: block;
+        font-size: 0.9rem;
+        color: #777;
+        font-weight: 400;
+        margin-top: 0.25rem;
+      }
+      .achievements-list li::before {
+        content: "🏆";
+        font-size: 1rem;
+        top: 2px;
+      }
+
+      /* --- Skills Section --- */
+      #skills {
+        background-color: var(--bg-secondary-color);
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .skill-card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      /* NEW: Glowing Border Effect */
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        border: 2px solid transparent;
+        background: linear-gradient(
+            to right,
+            var(--glow-color),
+            var(--primary-color)
+          )
+          border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .skill-card:hover {
+        transform: translateY(-8px);
+      }
+      .skill-card:hover::before {
+        opacity: 1;
+      }
+      .skill-card i {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+      }
+      .skill-card:hover i {
+        transform: scale(1.1);
+      }
+      .skill-card h3 {
+        font-size: 1.5rem;
+        color: var(--heading-color);
+      }
+
+      /* --- Project & Certificate Slider Styles --- */
+      #projects,
+      #certificates {
+        background-color: var(--bg-color);
+      }
+      #certificates {
+        background-color: var(--bg-secondary-color);
+      }
+
+      .swiper {
+        width: 100%;
+        padding: 1rem 3.5rem;
+      }
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        height: auto;
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: var(--primary-color);
+        transition: transform 0.2s ease;
+      }
+      .swiper-button-next:hover,
+      .swiper-button-prev:hover {
+        transform: scale(1.2);
+      }
+
+      .project-card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+      .project-card:hover {
+        transform: translateY(-8px);
+      }
+      .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        background-color: var(--card-bg);
+        filter: brightness(0.9);
+        transition: filter 0.3s ease;
+      }
+      .project-card:hover img {
+        filter: brightness(1);
+      }
+      .project-card h3 {
+        padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+      }
+      .project-card p {
+        padding: 0 1.5rem;
+        flex-grow: 1;
+      }
+      /* NEW: Tech Stack Tags */
+      .tech-stack {
+        padding: 0 1.5rem;
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .tech-tag {
+        background-color: rgba(34, 211, 238, 0.1);
+        color: var(--primary-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .project-link {
+        display: inline-block;
+        margin: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* --- CORRECTED Certificate Card Styles --- */
+      .certificate-link {
+        display: block;
+        text-decoration: none;
+        height: 100%; /* This is OK here because swiper-slide stretches */
+      }
+
+      .certificate-card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        width: 100%;
+        height: 100%; /* Let the card fill the slide */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .certificate-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px var(--shadow-color);
+      }
+
+      .certificate-card img {
+        width: 100%;
+        height: 200px; /* We still define a consistent height for the image area */
+        object-fit: contain;
+
+        /* This gives a clean background for any "letterboxing" if the image isn't wide enough. */
+        background-color: var(--card-bg);
+      }
+
+      .certificate-content {
+        padding: 1.5rem;
+        text-align: center; /* Center the text for a cleaner look */
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Vertically center the text content */
+      }
+
+      .certificate-content h4 {
+        color: var(--heading-color);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .certificate-content p {
+        color: var(--text-color);
+        font-size: 1rem;
+        margin-bottom: 0;
+      }
+
+      /* --- Contact Section --- */
+      #contact {
+        text-align: center;
+      }
+      #contact p {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto 2.5rem auto;
+      }
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      /* --- Footer --- */
+      footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        background-color: var(--bg-secondary-color);
+        color: var(--text-color);
+        border-top: 1px solid var(--border-color);
+      }
+
+      /* --- Back to Top Button --- */
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: var(--primary-color);
+        color: var(--bg-color);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 10px rgba(34, 211, 238, 0.2);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 900;
+        font-family: sans-serif;
+      }
+      .back-to-top:hover {
+        transform: translateY(-5px);
+      }
+      .back-to-top.show {
+        display: flex;
+      }
+
+      /* --- Resume Modal Styles --- */
+      /* --- UPDATED Resume Modal Styles for Vertical Scrolling --- */
+      .modal-overlay {
+        /* (This style remains the same) */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(17, 24, 39, 0.8);
+        backdrop-filter: blur(8px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal-content {
+        position: relative;
+        background: var(--bg-secondary-color);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 900px;
+
+        /* --- KEY CHANGES --- */
+        max-height: 90vh; /* It can be shorter, but won't exceed 90% of screen height */
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto; /* This adds the scrollbar to the modal itself! */
+
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 30px var(--shadow-color);
+      }
+
+      .modal-content h3 {
+        text-align: center;
+        color: var(--heading-color);
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        /* Make the title stick to the top when scrolling */
+        position: sticky;
+        top: -1rem; /* Adjust to match padding */
+        background: var(--bg-secondary-color);
+        z-index: 10;
+        padding-top: 1rem;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2.5rem;
+        color: var(--text-color);
+        cursor: none;
+        line-height: 1;
+        z-index: 2001;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+      .close-modal:hover {
+        color: var(--primary-color);
+        transform: rotate(90deg);
+      }
+
+      /* This is the new container for the images */
+      #resume-viewer {
+        margin-top: 1rem;
+      }
+
+      #resume-viewer img {
+        width: 100%;
+        height: auto; /* This maintains the image's aspect ratio */
+        display: block; /* Removes any extra space below the image */
+        border-radius: 4px;
+        margin-bottom: 1rem; /* Adds space between pages */
+      }
+
+      .download-btn {
+        display: block;
+        width: fit-content;
+        margin: 1.5rem auto 0.5rem auto; /* Ensures it's at the bottom */
+      }
+
+      /* --- DESKTOP STYLES (Tablet & Up) --- */
+      @media (min-width: 769px) {
+        body {
+          padding-top: var(--header-height);
+        }
+        section {
+          padding: 6rem 2rem;
+        }
+        nav {
+          padding: 0 2rem;
+        }
+        h2 {
+          font-size: 2.8rem;
+        }
+        .hamburger-menu {
+          display: none;
+        }
+        .nav-links {
+          display: flex;
+          list-style: none;
+          align-items: center;
+        }
+        .nav-links li {
+          margin-left: 1.5rem;
+        }
+        .nav-links a {
+          font-weight: 500;
+          color: var(--text-color);
+          padding: 0.5rem 0.25rem;
+          position: relative;
+          transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: var(--primary-color);
+          transition: width 0.3s ease;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+          color: var(--heading-color);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+          width: 100%;
+        }
+        .nav-links .resume-trigger {
+          margin-left: 2rem;
+          padding: 0.5rem 1.2rem;
+          border: 1px solid var(--primary-color);
+          color: var(--primary-color);
+          border-radius: 5px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .nav-links .resume-trigger:hover {
+          background-color: var(--primary-color);
+          color: var(--bg-color);
+        }
+        .nav-links .resume-trigger::after {
+          display: none; /* No underline for button */
+        }
+        .hero-content h1 {
+          font-size: 3.5rem;
+        }
+        .hero-content p {
+          font-size: 1.25rem;
+          min-height: 2.5rem;
+        }
+        .experience-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .skills-grid {
+          grid-template-columns: repeat(2, 1fr);
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .contact-links {
+          flex-direction: row;
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        .modal-content {
+          padding: 2rem;
+        }
+      }
+
+      /* --- Larger Desktop Styles --- */
+      @media (min-width: 1024px) {
+        .skills-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NEW: Interactive Cursor elements -->
+    <div id="cursor-dot" class="cursor"></div>
+    <div id="cursor-outline" class="cursor"></div>
+
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="#home">RAKTIM DEY</a>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#" class="resume-trigger">View Resume</a></li>
+        </ul>
+
+        <div class="hamburger-menu">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="mobile-nav">
+      <ul class="mobile-nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certificates">Certificates</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" class="resume-trigger">View Resume</a></li>
+      </ul>
+    </div>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-content">
+          <h1 class="fade-up">WELCOME! I AM RAKTIM DEY</h1>
+          <p class="fade-up">
+            <span id="typing-text"></span><span class="typing-cursor"></span>
+          </p>
+          <a href="#projects" class="cta-button fade-up">View My Work</a>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2 class="fade-up">About Me</h2>
+        <div class="about-content">
+          <img
+            src="your-headshot.jpg"
+            alt="A professional headshot of Raktim Dey"
+            class="fade-up"
+          />
+          <p class="fade-up" style="transition-delay: 0.1s">
+            Currently, I'm an undergraduate student of Electrical and Electronic
+            Engineering (EEE) at Ahsanullah University of Science and Technology
+            (AUST). I'm very interested in Software Engineering and Programming.
+            I have great enthusiasm for machine learning and data analysis.
+            Additionally, I have skills in web development and once launched my
+            own website through web hosting. As I can develop websites, I know
+            HTML5, CSS, and JavaScript. Besides these scripting languages, I
+            know C and C++. Now, I'm an enthusiast to learn React.js. Moreover,
+            I have skills in a different area, which is Graphic Designing. I
+            have mastered Adobe Photoshop, Adobe Illustrator, and Canva. Aiming
+            to get myself into a tech giant company.
+          </p>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2 class="fade-up">My Experience & Education</h2>
+        <div class="experience-grid">
+          <div class="experience-column fade-up">
+            <h3>Experience</h3>
+            <!-- ... EXPERIENCE SEGMENT ... -->
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>AUST Photography Club - AUSTPC</h4>
+              <ul>
+                <li>
+                  Head of Graphics Design <span>(Aug 2025 - Present)</span>
+                </li>
+                <li>
+                  Sub-Executive Member (GFX) <span>(Jan 2025 - Jul 2025)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>IEEE AUST Student Branch – IASB</h4>
+              <ul>
+                <li>
+                  Visual and Graphics Coordinator
+                  <span>(Mar 2025 - Present)</span>
+                </li>
+                <li>
+                  General Member
+                  <span>(Dec 2024 - Mar 2025)</span>
+                </li>
+                <li>
+                  Future Champ 4.0
+                  <span>(Jun 2024 - Mar 2025)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>AUST Debating Club - AUSTDC</h4>
+              <ul>
+                <li>
+                  Sub Executive Member (Admin)
+                  <span>(Jan 2025 - Present)</span>
+                </li>
+                <li>
+                  General Member
+                  <span>(Dec 2023 - Present)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>AUST Innovation and Design Club - AUSTIDC</h4>
+              <ul>
+                <li>
+                  General Member
+                  <span>(Dec 2023 - Present)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>AUST Career Development Club - AUSTCDC</h4>
+              <ul>
+                <li>
+                  General Member
+                  <span>(Dec 2023 - Present)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!--Experience Individual-->
+            <div class="experience-item fade-up">
+              <h4>Bangladesh Red Crescent Society - BDRCS</h4>
+              <ul>
+                <li>
+                  Volunteer
+                  <span>(Jan 2015 - Present)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Add other experience items similarly -->
+          </div>
+
+          <div class="experience-column fade-up" style="transition-delay: 0.1s">
+            <h3>Education</h3>
+            <div class="experience-item fade-up">
+              <h4>B.Sc in EEE (2023 - 2027)</h4>
+              <h5>Ahsanullah University of Science and Technology - AUST</h5>
+            </div>
+            <!-- ... (Other education and achievements items with "fade-up" class) ... -->
+            <div class="experience-item fade-up">
+              <h4>HSC, Science (2020 - 2022)</h4>
+              <h5>Ispahani Public College, Chittagong</h5>
+              <p>GPA: 5.00</p>
+            </div>
+            <div class="experience-item fade-up">
+              <h4>SSC, Science (2020)</h4>
+              <h5>Hazi Mohammad Mohsin Govt. High School, Chittagong</h5>
+              <p>GPA: 5.00</p>
+            </div>
+            <h3 class="fade-up">Achievements</h3>
+            <div class="experience-item fade-up">
+              <ul class="achievements-list">
+                <li>
+                  Qualified and Participated at the HSBC Business Case
+                  Competition 2025 National Round
+                </li>
+                <li>
+                  One of the Top 3 teams at HSBC - Business Case Competition
+                  2025 Intra Round
+                </li>
+                <li>
+                  Regional Winner of Bangladesh Mathematical Olympiad (BdMO)
+                  2022
+                </li>
+                <li>
+                  Divisional Qualifier at Bangladesh Physics Olympiad (BdPhO)
+                  2022
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- === UPDATED SKILLS SECTION === -->
+      <section id="skills">
+        <h2 class="fade-up">My Skills</h2>
+        <div class="skills-grid">
+          <!-- Skill Card 1: Programming & Web -->
+          <div class="skill-card fade-up">
+            <i class="fa-solid fa-code"></i>
+            <h3>Programming & Web</h3>
+            <p>
+              Proficient in C, C++, and Python. Skilled in frontend web
+              development with HTML5, CSS3, and JavaScript, with an interest in
+              app development.
+            </p>
+          </div>
+
+          <!-- Skill Card 2: EEE & Simulation -->
+          <div class="skill-card fade-up">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>EEE & Simulation Tools</h3>
+            <p>
+              Hands-on with PSpice, LTSpice, Matlab, and Quartus. Capable of
+              circuit design, AutoCAD drafting, and electrical installation
+              design.
+            </p>
+          </div>
+
+          <!-- Skill Card 3: Digital & Graphic Design -->
+          <div class="skill-card fade-up">
+            <i class="fa-solid fa-palette"></i>
+            <h3>Graphic & Digital Design</h3>
+            <p>
+              Skilled in creating visual assets and layouts using Adobe
+              Photoshop and Illustrator, bringing creative ideas to life for
+              digital media.
+            </p>
+          </div>
+
+          <!-- Skill Card 4: Professional Skills -->
+          <div class="skill-card fade-up">
+            <i class="fa-solid fa-handshake"></i>
+            <h3>Professional & Soft Skills</h3>
+            <p>
+              Excellent communication skills and full proficiency with the MS
+              Office Suite (Word, Excel, PowerPoint) for documentation and
+              presentations.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2 class="fade-up">My Projects</h2>
+        <div class="swiper project-slider fade-up">
+          <div class="swiper-wrapper">
+            <!--Project Individual-->
+            <div class="swiper-slide">
+              <div class="project-card">
+                <img
+                  src="Projects/Screenshot (326).png"
+                  alt="Screenshot of Project 1"
+                />
+                <h3>Personal Portfolio Website</h3>
+                <p>
+                  The very website you are viewing. Built from scratch to be a
+                  fully responsive, interactive showcase of my skills and work.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-tag">HTML5</span>
+                  <span class="tech-tag">CSS3</span>
+                  <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="#" class="project-link">View Live</a>
+              </div>
+            </div>
+
+            <!--Project Individual-->
+            <div class="swiper-slide">
+              <div class="project-card">
+                <img
+                  src="Projects/1 RGB.png.jpg"
+                  alt="Screenshot of Project 2"
+                />
+                <h3>SI Global Session Poster</h3>
+                <p>This poster is made for IASB</p>
+                <div class="tech-stack">
+                  <span class="tech-tag">Adobe Illustrator</span>
+                </div>
+                <a href="#" target="_blank" class="project-link"
+                  >View Project</a
+                >
+              </div>
+            </div>
+
+            <!--Project Individual-->
+            <div class="swiper-slide">
+              <div class="project-card">
+                <img
+                  src="Projects/Action Plan 1.0.jpg"
+                  alt="Screenshot of Project 2"
+                />
+                <h3>Poster of Action Plan Program for IASB ExCom</h3>
+                <p>This poster is made for IASB</p>
+                <div class="tech-stack">
+                  <span class="tech-tag">Adobe Illustrator</span>
+                </div>
+                <a href="#" target="_blank" class="project-link"
+                  >View Project</a
+                >
+              </div>
+            </div>
+
+            <!--Project Individual-->
+            <div class="swiper-slide">
+              <div class="project-card">
+                <img
+                  src="Projects/Buddha Purnima.jpg"
+                  alt="Screenshot of Project 2"
+                />
+                <h3>Buddha Purnima Poster</h3>
+                <p>This poster is made for IASB</p>
+                <div class="tech-stack">
+                  <span class="tech-tag">Adobe Illustrator</span>
+                  <span class="tech-tag">Adobe Photoshop</span>
+                </div>
+                <a href="#" target="_blank" class="project-link"
+                  >View Project</a
+                >
+              </div>
+            </div>
+
+            <!-- Add more project swiper-slides here -->
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
+
+      <section id="certificates">
+        <h2 class="fade-up">Certificates</h2>
+
+        <div class="swiper certificate-slider fade-up">
+          <div class="swiper-wrapper">
+            <!-- Certificate Slide 1 -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 1]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="certificates/1.jpeg"
+                    alt="Image of [Name of Certificate 1]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Recognition</h4>
+                    <p>Issued by HSBC</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Certificate Slide 2 -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 2]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="Certificates/2.jpeg"
+                    alt="Image of [Name of Certificate 2]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Participation</h4>
+                    <p>Issued by BDChO</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Certificate Slide  -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 3]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="Certificates/3.jpeg"
+                    alt="Image of [Name of Certificate 3]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Achievement</h4>
+                    <p>Issued by BDRCS</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <!-- Certificate Slide  -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 3]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="Certificates/4.jpg"
+                    alt="Image of [Name of Certificate 3]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Achievement</h4>
+                    <p>Issued by BDMO</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <!-- Certificate Slide  -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 3]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="Certificates/5.jpeg"
+                    alt="Image of [Name of Certificate 3]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Appreciation</h4>
+                    <p>Issued by IEEE AUST Student Branch</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Certificate Slide  -->
+            <div class="swiper-slide">
+              <a
+                href="[Link to Credential 3]"
+                target="_blank"
+                class="certificate-link"
+              >
+                <div class="certificate-card">
+                  <img
+                    src="Certificates/6.jpeg"
+                    alt="Image of [Name of Certificate 3]"
+                  />
+                  <div class="certificate-content">
+                    <h4>Certificate of Membership</h4>
+                    <p>Issued by IEEE</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Add more slides by copying the block above -->
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
+
+      <!-- === CORRECTED CONTACT SECTION === -->
+      <section id="contact">
+        <h2 class="fade-up">Get In Touch</h2>
+        <p class="fade-up">
+          I'm currently open to new opportunities and collaborations. Whether
+          you have a question or just want to say hi, my inbox is always open!
+        </p>
+
+        <div class="contact-links fade-up">
+          <!-- Email Button -->
+          <a href="mailto:raktimdey901@gmail.com" class="cta-button">
+            <i class="fa-solid fa-envelope"></i> Email
+          </a>
+
+          <!-- LinkedIn Button -->
+          <a
+            href="https://www.linkedin.com/in/raktimdey50/"
+            target="_blank"
+            class="cta-button btn-linkedin"
+            style="color: #fff; background: #0077b5; border-color: #0a66c2"
+          >
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+
+          <!-- GitHub Button -->
+          <a
+            href="https://github.com/raktimdey15"
+            target="_blank"
+            class="cta-button btn-github"
+            style="
+              color: #fff;
+              background-color: #24292e;
+              border-color: #24292e;
+            "
+          >
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+
+          <a
+            href="https://www.facebook.com/Raktimdey"
+            target="_blank"
+            class="cta-button btn-facebook"
+            style="color: #fff; background: #09335c; border-color: #17395b"
+          >
+            <i class="fa-brands fa-facebook"></i> Facebook
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Raktim Dey. All rights reserved.</p>
+    </footer>
+
+    <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
+
+    <!-- === UPDATED RESUME MODAL === -->
+    <div id="resume-modal" class="modal-overlay">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>My Resume</h3>
+
+        <!-- This new div will hold and scroll your resume images -->
+        <div id="resume-viewer">
+          <img src="CV/1.jpg" alt="Resume Page 1" />
+          <img src="CV/2.jpg" alt="Resume Page 2" />
+          <img src="CV/3.jpg" alt="Resume Page 2" />
+          <!-- Add more <img> tags here if you have more pages -->
+        </div>
+
+        <a
+          href="resume.pdf"
+          download="RaktimDey_Resume.pdf"
+          class="cta-button download-btn"
+        >
+          Download PDF
+        </a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- 1. NEW: LENIS SMOOTH SCROLL SETUP ---
+        const lenis = new Lenis({
+          duration: 1.2, // speed
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easing function
+        });
+
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // --- Selectors ---
+        const hamburgerMenu = document.querySelector(".hamburger-menu");
+        const mobileNav = document.querySelector(".mobile-nav");
+        const mobileNavLinks = document.querySelectorAll(".mobile-nav a");
+        const backToTopButton = document.querySelector(".back-to-top");
+        const allNavLinks = document.querySelectorAll(
+          '.nav-links a[href^="#"], .mobile-nav-links a[href^="#"]'
+        );
+        const resumeModal = document.getElementById("resume-modal");
+        const resumeTriggers = document.querySelectorAll(".resume-trigger");
+        const closeModalBtn = document.querySelector(".close-modal");
+        const sections = document.querySelectorAll("section[id]");
+
+        // --- Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+          hamburgerMenu.classList.toggle("active");
+          mobileNav.classList.toggle("active");
+          document.body.style.overflow = mobileNav.classList.contains("active")
+            ? "hidden"
+            : "";
+        }
+        hamburgerMenu.addEventListener("click", toggleMobileMenu);
+
+        mobileNavLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            if (mobileNav.classList.contains("active")) {
+              toggleMobileMenu();
+            }
+          });
+        });
+
+        // --- Back to Top Button ---
+        window.addEventListener("scroll", () => {
+          backToTopButton.classList.toggle("show", window.scrollY > 300);
+        });
+
+        // --- Active Nav Link Highlighting on Scroll ---
+        // Lenis provides its own scroll event, but IntersectionObserver is more performant for this
+        const observerNav = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                document
+                  .querySelectorAll(".nav-links a.active")
+                  .forEach((a) => a.classList.remove("active"));
+                const newActiveLink = document.querySelector(
+                  `.nav-links a[href="#${id}"]`
+                );
+                if (newActiveLink) {
+                  newActiveLink.classList.add("active");
+                }
+              }
+            });
+          },
+          { rootMargin: "-30% 0px -70% 0px" }
+        );
+        sections.forEach((section) => observerNav.observe(section));
+
+        // --- 2. NEW: INTEGRATE LENIS WITH ANCHOR LINKS ---
+        allNavLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const href = link.getAttribute("href");
+            // Only handle internal anchor links, not resume triggers
+            if (href.startsWith("#")) {
+              e.preventDefault();
+              lenis.scrollTo(href);
+            }
+          });
+        });
+
+        // --- Resume Modal Logic ---
+        // --- Resume Modal Logic ---
+        const resumeIframe = document.getElementById("resume-iframe");
+
+        function openModal() {
+          resumeModal.classList.add("show");
+          document.body.style.overflow = "hidden";
+          if (mobileNav.classList.contains("active")) {
+            toggleMobileMenu();
+          }
+
+          // --- NEW: Load PDF dynamically to prevent auto-download ---
+          // Only load the PDF if it hasn't been loaded yet.
+          if (!resumeIframe.src) {
+            // Show a loading message
+            resumeIframe.contentWindow.document.body.innerHTML =
+              '<p style="color: white; text-align: center; padding-top: 2rem;">Loading Resume...</p>';
+
+            fetch("resume.pdf")
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Network response was not ok");
+                }
+                return response.blob(); // 1. Get the raw data as a "Blob"
+              })
+              .then((blob) => {
+                // 2. Create a temporary, safe URL for the Blob
+                const objectURL = URL.createObjectURL(blob);
+
+                // 3. Set the iframe's src to the safe URL
+                // We add #toolbar=0 to hide the default PDF controls for a cleaner look
+                resumeIframe.src = objectURL + "#toolbar=0&navpanes=0";
+              })
+              .catch((error) => {
+                console.error("Error loading PDF:", error);
+                resumeIframe.contentWindow.document.body.innerHTML =
+                  '<p style="color: #ff6b6b; text-align: center; padding-top: 2rem;">Failed to load resume. Please try downloading it instead.</p>';
+              });
+          }
+        }
+        function closeModal() {
+          resumeModal.classList.remove("show");
+          document.body.style.overflow = "";
+        }
+        resumeTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", (e) => {
+            e.preventDefault();
+            openModal();
+          });
+        });
+        closeModalBtn.addEventListener("click", closeModal);
+        resumeModal.addEventListener("click", (e) => {
+          if (e.target === resumeModal) closeModal();
+        });
+
+        // --- Swiper Slider Logic ---
+        const projectSlider = new Swiper(".project-slider", {
+          loop: true,
+          slidesPerView: 1,
+          spaceBetween: 30,
+          navigation: {
+            nextEl: ".project-slider .swiper-button-next",
+            prevEl: ".project-slider .swiper-button-prev",
+          },
+          breakpoints: {
+            769: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 30 },
+          },
+        });
+        const certificateSlider = new Swiper(".certificate-slider", {
+          loop: true,
+          grabCursor: true,
+          slidesPerView: 1,
+          spaceBetween: 30,
+          navigation: {
+            nextEl: ".certificate-slider .swiper-button-next",
+            prevEl: ".certificate-slider .swiper-button-prev",
+          },
+          breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 30 },
+          },
+        });
+
+        // --- On-Scroll Animations (Intersection Observer) ---
+        const animatedElements = document.querySelectorAll(".fade-up");
+        const scrollObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        animatedElements.forEach((el) => scrollObserver.observe(el));
+
+        // --- Hero Section Typing Effect ---
+        const typingTextElement = document.getElementById("typing-text");
+        const phrases = [
+          "Engineering Student (EEE, AUST)",
+          "Graphics Designer",
+          "Web Developer",
+          "Tech Enthusiast",
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+          const currentPhrase = phrases[phraseIndex];
+          if (isDeleting) {
+            typingTextElement.textContent = currentPhrase.substring(
+              0,
+              charIndex - 1
+            );
+            charIndex--;
+          } else {
+            typingTextElement.textContent = currentPhrase.substring(
+              0,
+              charIndex + 1
+            );
+            charIndex++;
+          }
+
+          let typeSpeed = isDeleting ? 50 : 100;
+
+          if (!isDeleting && charIndex === currentPhrase.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
+          }
+
+          setTimeout(typeEffect, typeSpeed);
+        }
+        typeEffect();
+
+        // --- Interactive Cursor Logic ---
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        const interactiveElements = document.querySelectorAll(
+          'a, button, .hamburger-menu, .swiper-button-next, .swiper-button-prev, .close-modal, input[type="submit"], .cta-button'
+        );
+
+        window.addEventListener("mousemove", (e) => {
+          const posX = e.clientX;
+          const posY = e.clientY;
+          cursorDot.style.left = `${posX}px`;
+          cursorDot.style.top = `${posY}px`;
+          cursorOutline.animate(
+            { left: `${posX}px`, top: `${posY}px` },
+            { duration: 500, fill: "forwards" }
+          );
+        });
+
+        interactiveElements.forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            cursorOutline.classList.add("cursor-interactive");
+          });
+          el.addEventListener("mouseleave", () => {
+            cursorOutline.classList.remove("cursor-interactive");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
