@@ -250,7 +250,7 @@ nav {
       rgba(17, 24, 39, 0.7),
       rgba(17, 24, 39, 0.7)
     ),
-    url("cover-photo.jpg");
+    url("cover-photo.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -746,3 +746,4 @@ footer {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
