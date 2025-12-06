@@ -58,7 +58,7 @@
     </style>
   </head>
   <body>
-    <a href="Sample 4.html" class="back-button">&larr; Back to Portfolio</a>
+    <a href="index.html" class="back-button">&larr; Back to Portfolio</a>
 
     <div class="image-container">
       <p class="loading-text">Loading image...</p>
@@ -75,23 +75,16 @@
         const imgElement = document.getElementById("project-image");
         const loadingText = document.querySelector(".loading-text");
 
-        // 1. Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-
-        // 2. Get the specific 'src' parameter we will pass from the main page
         const imageUrl = urlParams.get("src");
 
         if (imageUrl) {
           // 3. Set the src of our image element
           imgElement.src = decodeURIComponent(imageUrl);
-
-          // 4. Show the image and hide loading text once it's loaded
           imgElement.onload = () => {
             loadingText.style.display = "none";
             imgElement.style.display = "block";
           };
-
-          // Handle cases where the image might fail to load
           imgElement.onerror = () => {
             loadingText.textContent = "Error: Could not load image.";
           };
@@ -102,3 +95,4 @@
     </script>
   </body>
 </html>
+
