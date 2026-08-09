@@ -61,21 +61,140 @@
       .cursor-hover #cursor-outline { width: 60px; height: 60px; background: rgba(56, 189, 248, 0.1); border-color: var(--primary); }
 
       /* --- Navigation --- */
-      header { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 0; z-index: 1000; transition: var(--transition); border-bottom: 1px solid transparent; }
-      header.scrolled { padding: 1rem 0; background: rgba(9, 9, 11, 0.94); border-bottom: 1px solid var(--card-border); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); will-change: padding, background; }
-      nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-      .logo a { font-size: 1.6rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 1px; }
-      .logo a:hover { text-shadow: 0 0 10px rgba(56,189,248,0.5); }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem 1.25rem;
+        z-index: 1000;
+        transition: padding 0.3s ease;
+        border-bottom: 0;
+        pointer-events: none;
+      }
 
-      .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-      .nav-links li a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: var(--transition); position: relative; }
-      .nav-links li a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: var(--transition); }
-      .nav-links li a:hover, .nav-links li a.active { color: var(--text); }
-      .nav-links li a:hover::after, .nav-links li a.active::after { width: 100%; }
+      header.scrolled {
+        padding: 0.7rem 1.25rem;
+        background: transparent;
+        border-bottom: 0;
+        box-shadow: none;
+        will-change: padding;
+      }
 
-      .resume-trigger { padding: 0.5rem 1.2rem; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; color: var(--primary) !important; background: rgba(56, 189, 248, 0.05); }
-      .resume-trigger:hover { background: var(--primary); color: #000 !important; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
-      .resume-trigger::after { display: none !important; }
+      nav {
+        max-width: 1280px;
+        margin: 0 auto;
+        min-height: 68px;
+        padding: 0.7rem 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        background: rgba(9, 9, 11, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        box-shadow:
+          0 10px 35px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        pointer-events: auto;
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      header.scrolled nav {
+        background: rgba(9, 9, 11, 0.92);
+        border-color: rgba(56, 189, 248, 0.18);
+        box-shadow:
+          0 12px 35px rgba(0, 0, 0, 0.38),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .logo a {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: var(--text);
+        text-decoration: none;
+        letter-spacing: 1.5px;
+        white-space: nowrap;
+        background: linear-gradient(90deg, #fff, var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: filter 0.25s ease, transform 0.25s ease;
+      }
+
+      .logo a:hover {
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35));
+        transform: translateY(-1px);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.35rem;
+        list-style: none;
+        align-items: center;
+        margin-left: auto;
+      }
+
+      .nav-links li a {
+        color: rgba(248, 250, 252, 0.68);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.65rem 0.8rem;
+        border-radius: 10px;
+      }
+
+      .nav-links li a::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform: translateX(-50%);
+        transition: width 0.25s ease;
+      }
+
+      .nav-links li a:hover,
+      .nav-links li a.active {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.055);
+      }
+
+      .nav-links li a:hover {
+        transform: translateY(-1px);
+      }
+
+      .nav-links li a:hover::after,
+      .nav-links li a.active::after {
+        width: 24px;
+      }
+
+      .nav-links li a.resume-trigger {
+        margin-left: 0.4rem;
+        padding: 0.65rem 1.05rem;
+        border: 1px solid rgba(56, 189, 248, 0.45);
+        border-radius: 11px;
+        color: var(--primary) !important;
+        background: rgba(56, 189, 248, 0.07);
+        box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.03);
+      }
+
+      .nav-links li a.resume-trigger:hover {
+        background: var(--primary);
+        color: #000 !important;
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.28);
+      }
+
+      .nav-links li a.resume-trigger::after {
+        display: none !important;
+      }
 
       /* Hamburger */
       .hamburger-menu { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1001; }
@@ -94,13 +213,15 @@
       /* --- Hero Section --- */
       .hero {
         min-height: 100vh;
+        width: 100%;
+        max-width: none;
+        margin: -80px 0 0;
+        padding: 0 2rem;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 0 2rem;
         position: relative;
-        margin-top: -80px;
         isolation: isolate;
         overflow: hidden;
         background-image:
@@ -253,6 +374,17 @@
       @media (max-width: 768px) {
         .hero {
           background-attachment: scroll;
+        }
+
+        header,
+        header.scrolled {
+          padding: 0.75rem;
+        }
+
+        nav {
+          min-height: 62px;
+          padding: 0.65rem 1rem;
+          border-radius: 15px;
         }
 
         .nav-links { display: none; }
@@ -2845,7 +2977,6 @@
     </script>
   </body>
 </html>
-
 
 
 
