@@ -92,7 +92,48 @@
       .mobile-nav-links a:hover, .mobile-nav-links a.active { color: var(--primary); }
 
       /* --- Hero Section --- */
-      .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 2rem; position: relative; margin-top: -80px; }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 2rem;
+        position: relative;
+        margin-top: -80px;
+        isolation: isolate;
+        overflow: hidden;
+        background-image:
+          linear-gradient(rgba(9, 9, 11, 0.48), rgba(9, 9, 11, 0.68)),
+          url('CSS/cover-photo.webp');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        z-index: -2;
+        pointer-events: none;
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(9, 9, 11, 0.18) 0%,
+          rgba(9, 9, 11, 0.12) 45%,
+          rgba(9, 9, 11, 0.78) 100%
+        );
+        z-index: -1;
+        pointer-events: none;
+      }
       .hero-content { max-width: 800px; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; z-index: 2;}
       .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.2; letter-spacing: -1px; }
       .hero h1 span { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -210,6 +251,10 @@
         .hero h1 { font-size: 2.5rem; }
       }
       @media (max-width: 768px) {
+        .hero {
+          background-attachment: scroll;
+        }
+
         .nav-links { display: none; }
         .hamburger-menu { display: flex; }
         .cursor { display: none; } /* Hide custom cursor on mobile */
